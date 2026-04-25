@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Speed Impact Calculator — Revenue Impact of Site Speed | MarketingAI</title>
+  <meta name="description" content="Free Website Speed Impact Calculator. See how your site speed affects conversions, revenue, and SEO rankings. Calculate the revenue impact of faster load times.">
+  <meta property="og:title" content="Website Speed Impact Calculator — Revenue Impact of Site Speed | MarketingAI">
+  <meta property="og:description" content="Free Website Speed Impact Calculator. See how site speed affects conversions and revenue.">
+  <meta property="og:type" content="website">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Q8MGZ47BC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2Q8MGZ47BC');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7076137753154472"
+      crossorigin="anonymous"></script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.6; }
+    header { background: #1a1a2e; color: #fff; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+    header .logo { font-weight: 700; font-size: 1.1rem; color: #fff; text-decoration: none; }
+    header .logo span { color: #6c63ff; }
+    .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: #fff; padding: 60px 24px 48px; text-align: center; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 520px; margin: 0 auto; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin: -28px auto 32px; }
+    .calc-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #1a1a2e; }
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: #444; }
+    .input-group input[type="number"] { width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1.05rem; transition: border-color 0.2s; outline: none; }
+    .input-group input[type="number"]:focus { border-color: #6c63ff; }
+    .calc-btn { width: 100%; padding: 14px; background: #6c63ff; color: #fff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+    .calc-btn:hover { background: #574fd6; }
+    .calc-btn:active { transform: scale(0.99); }
+    .result-box { margin-top: 24px; padding: 24px; border-radius: 10px; background: #f3f1ff; border-left: 4px solid #6c63ff; display: none; }
+    .result-box.show { display: block; }
+    .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .result-item { background: #fff; padding: 20px; border-radius: 8px; text-align: center; }
+    .result-item .label { font-size: 0.85rem; color: #666; margin-bottom: 4px; }
+    .result-item .value { font-size: 1.6rem; font-weight: 800; color: #1a1a2e; }
+    .result-item.highlight .value { color: #6c63ff; }
+    .impact-text { margin-top: 20px; padding: 16px; background: #fff; border-radius: 8px; font-size: 0.95rem; color: #444; }
+    .impact-text strong { color: #1a1a2e; }
+    .impact-text .status { display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    .status.good { background: #d1fae5; color: #065f46; }
+    .status.average { background: #fef3c7; color: #92400e; }
+    .status.poor { background: #fee2e2; color: #991b1b; }
+    .error-msg { color: #dc2626; font-size: 0.9rem; margin-top: 10px; display: none; }
+    .error-msg.show { display: block; }
+    .helper-text { font-size: 0.82rem; color: #666; margin-top: 4px; }
+    .tips-section { background: #fff; border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin: 0 auto 32px; }
+    .tips-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+    .tips-section ul { margin-left: 20px; color: #444; font-size: 0.95rem; }
+    .tips-section li { margin-bottom: 8px; }
+    footer { background: #1a1a2e; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 0.82rem; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    @media (max-width: 500px) { .card, .tips-section { border-radius: 0; } }
+    .tools-footer { background: #1a1a2e; color: #fff; padding: 40px 24px; margin-top: 60px; border-top: 1px solid #2d3561; }
+    .footer-container { max-width: 720px; margin: 0 auto; }
+    .footer-section h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .footer-section p { opacity: 0.8; margin-bottom: 24px; font-size: 0.95rem; }
+    .footer-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .footer-links a { display: block; padding: 12px 16px; background: #16213e; border: 1px solid #2d3561; border-radius: 8px; color: #6c63ff; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; text-align: center; }
+    .footer-links a:hover { background: #0f3460; border-color: #6c63ff; color: #fff; transform: translateY(-2px); }
+    .footer-divider { height: 1px; background: #2d3561; margin: 24px 0; }
+    .footer-bottom { text-align: center; }
+    .footer-credit { opacity: 0.6; font-size: 0.85rem; }
+    @media (max-width: 640px) { .tools-footer { padding: 24px 16px; margin-top: 40px; } .footer-section h3 { font-size: 1.2rem; } .footer-links { grid-template-columns: 1fr; } }
+    .cta-card { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); border-radius: 12px; padding: 32px; color: #fff; text-align: center; margin: 0 auto 40px; }
+    .cta-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .cta-card p { opacity: 0.85; margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-btn { display: inline-block; padding: 14px 32px; background: #6c63ff; color: #fff; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: background 0.2s, transform 0.1s; }
+    .cta-btn:hover { background: #574fd6; transform: translateY(-1px); }
+    .price-tag { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+    .price-tag span { font-size: 1rem; font-weight: 400; opacity: 0.7; }
+    .disclaimer { font-size: 0.78rem; opacity: 0.55; margin-top: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="https://marketing-ai-psi-nine.vercel.app/" class="logo">Marketing<span>AI</span></a>
+</header>
+
+<div class="hero">
+  <h1>Website Speed Impact Calculator — How Fast Is Costing You Revenue?</h1>
+  <p>Website speed directly impacts conversions and SEO. Use this free calculator to see how much revenue faster load times could generate.</p>
+</div>
+
+<div class="container">
+
+  <div class="card" style="margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:12px;color:#1a1a2e;">How to use</h2>
+    <ol style="margin-left:18px;color:#444;font-size:0.95rem;line-height:1.8;">
+      <li>Enter your current page load time (in seconds)</li>
+      <li>Enter your monthly website revenue</li>
+      <li>See the revenue impact of improving site speed</li>
+    </ol>
+  </div>
+
+  <div class="card calc-section" style="margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-top:1px solid #f0f0f0;">
+    <h2>Calculate Speed Impact</h2>
+
+    <div class="input-group">
+      <label for="loadTime">Current Page Load Time (seconds)</label>
+      <input type="number" id="loadTime" min="0.1" step="0.1" placeholder="e.g. 4.5" inputmode="decimal">
+    </div>
+
+    <div class="input-group">
+      <label for="revenue">Monthly Website Revenue ($)</label>
+      <input type="number" id="revenue" min="100" step="100" placeholder="e.g. 10000" inputmode="decimal">
+    </div>
+
+    <div class="input-group">
+      <label for="visitors">Monthly Unique Visitors</label>
+      <input type="number" id="visitors" min="100" step="100" placeholder="e.g. 5000" inputmode="numeric">
+    </div>
+
+    <div class="input-group">
+      <label for="bounceRate">Bounce Rate (%)</label>
+      <input type="number" id="bounceRate" min="0" max="100" step="1" placeholder="e.g. 55" inputmode="decimal">
+      <p class="helper-text">Percentage of visitors who leave after viewing one page</p>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate Impact</button>
+
+    <div class="error-msg" id="error-msg">Please enter valid numbers.</div>
+
+    <div class="result-box" id="result-box">
+      <div class="result-grid">
+        <div class="result-item highlight">
+          <div class="label">Potential Additional Revenue</div>
+          <div class="value" id="additional-revenue">--</div>
+        </div>
+        <div class="result-item">
+          <div class="label">Conversion Rate Lift</div>
+          <div class="value" id="conversion-lift">--</div>
+        </div>
+      </div>
+      <div class="impact-text" id="impact-text"></div>
+    </div>
+  </div>
+
+  <div class="cta-card">
+    <h2>Want a Custom Marketing System Built for You?</h2>
+    <p>MarketingAI configures your content engine, outbound sequence, and email nurture — delivered in under a week. One-time setup: $149 AUD.</p>
+    <div class="price-tag">$149 AUD <span>one-time setup</span></div>
+    <a href="https://buy.stripe.com/cNi8wR0wZd8lePh01cbsc00" class="cta-btn">Get Your Marketing System</a>
+    <div class="disclaimer">Outcomes vary by business, market, and execution consistency.</div>
+  </div>
+
+  <div class="tips-section">
+    <h2>Speed Optimisation Tips</h2>
+    <ul>
+      <li><strong>Target under 3 seconds:</strong> Google says 53% of users leave a site that takes >3s to load.</li>
+      <li><strong>Optimise images:</strong> Compress and use modern formats (WebP).</li>
+      <li><strong>Enable caching:</strong> Browser caching reduces repeat load times.</li>
+      <li><strong>Use a CDN:</strong> Content Delivery Networks serve files from closer locations.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>2026 MarketingAI — Australian businesses only. Results are indicative. Marketing outcomes are not guaranteed.</p>
+  </footer>
+
+  <footer class="tools-footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Explore Our Marketing Tools</h3>
+        <p>Optimize every aspect of your marketing strategy with our free calculators and tools.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://email-open-rate.vercel.app/">→ Email Open Rate Calculator</a>
+        <a href="https://roi-calculator-swart-one.vercel.app/">→ Marketing ROI Calculator</a>
+        <a href="https://roas-calc.vercel.app/">→ ROAS Calculator</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-credit">Part of the <strong>MarketingAI</strong> toolkit — Free marketing tools for Australian businesses</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function calculate() {
+    var loadTimeEl = document.getElementById('loadTime');
+    var revenueEl = document.getElementById('revenue');
+    var visitorsEl = document.getElementById('visitors');
+    var bounceRateEl = document.getElementById('bounceRate');
+    var errorMsg = document.getElementById('error-msg');
+    var resultBox = document.getElementById('result-box');
+
+    var loadTime = parseFloat(loadTimeEl.value);
+    var revenue = parseFloat(revenueEl.value);
+    var visitors = parseFloat(visitorsEl.value);
+    var bounceRate = parseFloat(bounceRateEl.value);
+
+    if (isNaN(loadTime) || isNaN(revenue) || isNaN(visitors) || isNaN(bounceRate) || loadTime <= 0 || revenue <= 0 || visitors <= 0 || bounceRate < 0 || bounceRate > 100) {
+      errorMsg.classList.add('show');
+      resultBox.classList.remove('show');
+      return;
+    }
+
+    errorMsg.classList.remove('show');
+
+    var baseConversionRate = 0.025;
+    var conversionDropPerSecond = 0.02;
+    var bounceImpact = bounceRate / 100;
+    var currentConversionDrop = Math.min((loadTime - 1) * conversionDropPerSecond, 0.5);
+    var currentConversionRate = baseConversionRate * (1 - currentConversionDrop) * (1 - bounceImpact);
+
+    var targetLoadTime = loadTime > 3 ? 3 : 1;
+    var targetConversionDrop = Math.max((targetLoadTime - 1) * conversionDropPerSecond, 0);
+    var targetConversionRate = baseConversionRate * (1 - targetConversionDrop) * (1 - bounceImpact);
+
+    var conversionLift = (targetConversionRate - currentConversionRate) * 100;
+    var additionalRevenue = revenue * (conversionLift / (currentConversionRate * 100));
+
+    document.getElementById('additional-revenue').textContent = '+$' + additionalRevenue.toLocaleString('en-AU', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    document.getElementById('conversion-lift').textContent = '+' + conversionLift.toFixed(1) + '%';
+
+    var statusClass, statusLabel, descText;
+
+    if (loadTime <= 2) {
+      statusClass = 'good';
+      statusLabel = 'Fast Site';
+      descText = 'Your site speed is excellent. Keep monitoring and optimising.';
+    } else if (loadTime <= 4) {
+      statusClass = 'average';
+      statusLabel = 'Room for Improvement';
+      descText = 'Improving to under 3s could increase your revenue by <strong>$' + additionalRevenue.toLocaleString('en-AU') + '/month</strong>.';
+    } else {
+      statusClass = 'poor';
+      statusLabel = 'Needs Attention';
+      descText = 'At <strong>' + loadTime + 's</strong>, you\'re likely losing visitors. Improving to 3s could add <strong>$' + additionalRevenue.toLocaleString('en-AU') + '/month</strong> in revenue.';
+    }
+
+    document.getElementById('impact-text').innerHTML = '<span class="status ' + statusClass + '">' + statusLabel + '</span><p>' + descText + '</p>';
+
+    resultBox.classList.add('show');
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      calculate();
+    }
+  });
+</script>
+
+</body>
+</html>
