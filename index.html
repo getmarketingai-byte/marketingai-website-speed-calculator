@@ -18,11 +18,10 @@
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "AUD", "name": "Free" },
-    "description": "Calculate how website speed affects your conversions and revenue. Free tool for Australian businesses.",
+    "description": "Calculate how website speed affects your conversions and revenue. Free tool for small businesses.",
     "url": "https://marketingai-website-speed-calculator.vercel.app/",
     "provider": { "@type": "Organization", "name": "MarketingAI", "url": "https://marketing-ai-psi-nine.vercel.app/" },
-    "keywords": "website speed, page speed, conversion impact, speed calculator",
-    "areaServed": { "@type": "Country", "name": "Australia" }
+    "keywords": "website speed, page speed, conversion impact, speed calculator"
   }
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Q8MGZ47BC"></script>
@@ -167,6 +166,19 @@
     </div>
   </div>
 
+  <div class="email-capture-card" style="background:#fff;border-radius:12px;padding:32px;text-align:center;margin:0 auto 24px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:8px;color:#1a1a2e;">Get Free Marketing Tips</h2>
+    <p style="color:#444;margin-bottom:20px;font-size:0.95rem;">Join our early access list for actionable marketing strategies delivered to your inbox.</p>
+    <form id="ml-form" onsubmit="submitMailerLite(event)" style="max-width:400px;margin:0 auto;">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+        <input type="email" id="ml-email" placeholder="your@email.com" required inputmode="email" style="flex:1;min-width:200px;padding:12px 16px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;outline:none;" onfocus="this.style.borderColor='#6c63ff'">
+        <button type="submit" id="ml-btn" style="padding:12px 24px;background:#6c63ff;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">Get Tips</button>
+      </div>
+      <div id="ml-success" style="display:none;margin-top:12px;padding:8px 16px;background:#d1fae5;color:#065f46;border-radius:6px;font-size:0.9rem;">Thanks! Check your inbox to confirm.</div>
+      <div id="ml-error" style="display:none;margin-top:12px;padding:8px 16px;background:#fee2e2;color:#991b1b;border-radius:6px;font-size:0.9rem;">Something went wrong. Please try again.</div>
+    </form>
+  </div>
+
   <div class="cta-card">
     <h2>Want a Custom Marketing System Built for You?</h2>
     <p>MarketingAI configures your content engine, outbound sequence, and email nurture — delivered in under a week. One-time setup: $149 AUD.</p>
@@ -186,7 +198,7 @@
   </div>
 
   <footer>
-    <p>2026 MarketingAI — Australian businesses only. Results are indicative. Marketing outcomes are not guaranteed.</p>
+    <p>2026 MarketingAI. Results are indicative. Marketing outcomes are not guaranteed.</p>
   </footer>
 
   <footer class="tools-footer">
@@ -202,7 +214,7 @@
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <p class="footer-credit">Part of the <strong>MarketingAI</strong> toolkit — Free marketing tools for Australian businesses</p>
+        <p class="footer-credit">Part of the <strong>MarketingAI</strong> toolkit — Free marketing tools for small businesses</p>
       </div>
     </div>
   </footer>
@@ -210,6 +222,44 @@
 </div>
 
 <script>
+  function submitMailerLite(e) {
+    e.preventDefault();
+    var email = document.getElementById('ml-email').value;
+    var btn = document.getElementById('ml-btn');
+    var success = document.getElementById('ml-success');
+    var error = document.getElementById('ml-error');
+
+    if (!email || !email.includes('@')) { error.style.display = 'block'; return; }
+
+    success.style.display = 'none';
+    error.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Subscribing...';
+
+    var cb = 'mlcb_' + Date.now();
+    window[cb] = function(resp) {
+      btn.disabled = false;
+      btn.textContent = 'Get Tips';
+      if (resp && resp.success) {
+        success.style.display = 'block';
+        document.getElementById('ml-email').value = '';
+      } else {
+        error.style.display = 'block';
+      }
+      try { delete window[cb]; } catch(ex) {}
+    };
+
+    var script = document.createElement('script');
+    script.src = 'https://assets.mailerlite.com/jsonp/2282416/forms/185339817098216933/subscribe?callback=' + cb + '&email=' + encodeURIComponent(email) + '&fields[group]=185339792113796232&ml-submit=1';
+    document.head.appendChild(script);
+
+    setTimeout(function() {
+      btn.disabled = false;
+      btn.textContent = 'Get Tips';
+      error.style.display = 'block';
+    }, 8000);
+  }
+
   function calculate() {
     var loadTimeEl = document.getElementById('loadTime');
     var revenueEl = document.getElementById('revenue');
