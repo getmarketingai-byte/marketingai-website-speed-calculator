@@ -32,7 +32,7 @@
     gtag('config', 'G-2Q8MGZ47BC');
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7076137753154472"
-      crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
@@ -76,6 +76,27 @@
     .tips-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
     .tips-section ul { margin-left: 20px; color: #444; font-size: 0.95rem; }
     .tips-section li { margin-bottom: 8px; }
+    .optin-card { background: #fff; border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin: 0 auto 32px; text-align: center; }
+    .optin-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .optin-card p { color: #666; font-size: 0.95rem; margin-bottom: 20px; }
+    .optin-form .input-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .optin-form input[type="email"] { flex: 1 1 220px; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    .optin-form input[type="email"]:focus { border-color: #6c63ff; }
+    .optin-form .submit-btn { flex: 0 0 auto; padding: 12px 20px; background: #6c63ff; color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; }
+    .optin-form .submit-btn:hover { background: #574fd6; }
+    .consent-label { margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; text-align: left; font-size: 0.82rem; color: #666; }
+    .consent-label input[type="checkbox"] { margin-top: 3px; accent-color: #6c63ff; width: 16px; height: 16px; flex-shrink: 0; }
+    .optin-message { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 14px; display: none; }
+    .optin-message.show { display: block; }
+    .optin-message.hidden { display: none !important; }
+    .optin-message.error { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; }
+    .optin-message.success { background: #dcfce7; color: #166534; border-left: 4px solid #16a34a; }
+    .optin-message strong { display: block; margin-bottom: 4px; font-weight: 600; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-loading { display: inline-block; margin-left: 8px; vertical-align: middle; }
+    .btn-loading.hidden { display: none; }
+    .spinner { display: inline-block; animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     footer { background: #1a1a2e; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
     footer a:hover { color: #fff; }
@@ -166,16 +187,37 @@
     </div>
   </div>
 
-  <div class="email-capture-card" style="background:#fff;border-radius:12px;padding:32px;text-align:center;margin:0 auto 24px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:8px;color:#1a1a2e;">Get Free Marketing Tips</h2>
-    <p style="color:#444;margin-bottom:20px;font-size:0.95rem;">Join our early access list for actionable marketing strategies delivered to your inbox.</p>
-    <form id="ml-form" onsubmit="submitMailerLite(event)" style="max-width:400px;margin:0 auto;">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-        <input type="email" id="ml-email" placeholder="your@email.com" required inputmode="email" style="flex:1;min-width:200px;padding:12px 16px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;outline:none;" onfocus="this.style.borderColor='#6c63ff'">
-        <button type="submit" id="ml-btn" style="padding:12px 24px;background:#6c63ff;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">Get Tips</button>
+  <!-- Email opt-in CTA -->
+  <div class="optin-card">
+    <h2>Get Website Speed Optimisation Checklist</h2>
+    <p>Get our free checklist of 10 things you can do today to speed up your website and boost conversions.</p>
+
+    <div id="optin-error" class="optin-message error hidden">
+      <strong>Oops!</strong> Form submission failed. Please try again in a moment.
+    </div>
+
+    <div id="optin-success" class="optin-message success hidden">
+      <strong>Success!</strong> Check your email for the checklist.
+    </div>
+
+    <form class="optin-form" id="optin-form" onsubmit="handleOptIn(event)">
+      <div class="input-row">
+        <input type="email" id="optin-email" placeholder="your@email.com" required>
+        <button type="submit" class="submit-btn" id="optin-submit">
+          <span class="btn-text">Send Me the Checklist</span>
+          <span class="btn-loading hidden">
+            <svg class="spinner" width="16" height="16" viewBox="0 0 16 16">
+              <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+              <path cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="9.4" stroke-linecap="round" opacity="0.9"/>
+            </svg>
+          </span>
+        </button>
       </div>
-      <div id="ml-success" style="display:none;margin-top:12px;padding:8px 16px;background:#d1fae5;color:#065f46;border-radius:6px;font-size:0.9rem;">Thanks! Check your inbox to confirm.</div>
-      <div id="ml-error" style="display:none;margin-top:12px;padding:8px 16px;background:#fee2e2;color:#991b1b;border-radius:6px;font-size:0.9rem;">Something went wrong. Please try again.</div>
+
+      <label class="consent-label">
+        <input type="checkbox" id="consent" required>
+        I agree to receive marketing emails from MarketingAI.
+      </label>
     </form>
   </div>
 
@@ -198,14 +240,14 @@
   </div>
 
   <footer>
-    <p>2026 MarketingAI. Results are indicative. Marketing outcomes are not guaranteed.</p>
+    <p>2026 MarketingAI — Results are indicative. Marketing outcomes are not guaranteed.</p>
   </footer>
 
   <footer class="tools-footer">
     <div class="footer-container">
       <div class="footer-section">
         <h3>Explore Our Marketing Tools</h3>
-        <p>Optimize every aspect of your marketing strategy with our free calculators and tools.</p>
+        <p>Optimise every aspect of your marketing strategy with our free calculators and tools.</p>
       </div>
       <div class="footer-links">
         <a href="https://email-open-rate.vercel.app/">→ Email Open Rate Calculator</a>
@@ -222,43 +264,120 @@
 </div>
 
 <script>
-  function submitMailerLite(e) {
-    e.preventDefault();
-    var email = document.getElementById('ml-email').value;
-    var btn = document.getElementById('ml-btn');
-    var success = document.getElementById('ml-success');
-    var error = document.getElementById('ml-error');
+  const MAILERLITE_CONFIG = {
+    endpoint: 'https://assets.mailerlite.com/jsonp/2282416/forms/185339817098216933/subscribe',
+    timeout: 10000,
+    retries: 3
+  };
 
-    if (!email || !email.includes('@')) { error.style.display = 'block'; return; }
+  function handleOptIn(event) {
+    event.preventDefault();
+    const email = document.getElementById('optin-email').value;
+    const consent = document.getElementById('consent').checked;
+    const submitBtn = document.getElementById('optin-submit');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const errorEl = document.getElementById('optin-error');
+    const successEl = document.getElementById('optin-success');
 
-    success.style.display = 'none';
-    error.style.display = 'none';
-    btn.disabled = true;
-    btn.textContent = 'Subscribing...';
+    if (!consent) {
+      errorEl.textContent = 'Please agree to receive marketing emails.';
+      errorEl.classList.remove('hidden');
+      errorEl.classList.add('show');
+      return;
+    }
 
-    var cb = 'mlcb_' + Date.now();
+    errorEl.classList.remove('show');
+    errorEl.classList.add('hidden');
+    successEl.classList.remove('show');
+    successEl.classList.add('hidden');
+
+    submitBtn.disabled = true;
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+
+    submitToMailerLite(email, submitBtn, btnText, btnLoading, errorEl, successEl, 0);
+  }
+
+  function submitToMailerLite(email, submitBtn, btnText, btnLoading, errorEl, successEl, retryCount) {
+    var cb = 'ml_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    var url = MAILERLITE_CONFIG.endpoint + '?callback=' + encodeURIComponent(cb) + '&email=' + encodeURIComponent(email) + '&ml-submit=1';
+
     window[cb] = function(resp) {
-      btn.disabled = false;
-      btn.textContent = 'Get Tips';
-      if (resp && resp.success) {
-        success.style.display = 'block';
-        document.getElementById('ml-email').value = '';
-      } else {
-        error.style.display = 'block';
-      }
-      try { delete window[cb]; } catch(ex) {}
+      clearTimeout(timeoutId);
+      cleanup();
+      document.getElementById('optin-form').style.display = 'none';
+      successEl.classList.remove('hidden');
+      successEl.classList.add('show');
+      if (typeof gtag === 'function') gtag('event', 'speed_calc_cta', { tool_name: 'website_speed' });
     };
 
-    var script = document.createElement('script');
-    script.src = 'https://assets.mailerlite.com/jsonp/2282416/forms/185339817098216933/subscribe?callback=' + cb + '&email=' + encodeURIComponent(email) + '&fields[group]=185339792113796232&ml-submit=1';
-    document.head.appendChild(script);
+    var timeoutId = setTimeout(function() {
+      cleanup();
+      if (retryCount < MAILERLITE_CONFIG.retries - 1) {
+        var backoffMs = Math.pow(2, retryCount) * 1000;
+        setTimeout(function() {
+          submitToMailerLite(email, submitBtn, btnText, btnLoading, errorEl, successEl, retryCount + 1);
+        }, backoffMs);
+        return;
+      }
+      submitBtn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+      errorEl.textContent = 'Request timed out. Please try again in a moment.';
+      errorEl.classList.remove('hidden');
+      errorEl.classList.add('show');
+    }, MAILERLITE_CONFIG.timeout);
 
-    setTimeout(function() {
-      btn.disabled = false;
-      btn.textContent = 'Get Tips';
-      error.style.display = 'block';
-    }, 8000);
+    function cleanup() {
+      delete window[cb];
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    var script = document.createElement('script');
+    script.src = url;
+    script.onerror = function() {
+      clearTimeout(timeoutId);
+      cleanup();
+      if (retryCount < MAILERLITE_CONFIG.retries - 1) {
+        var backoffMs = Math.pow(2, retryCount) * 1000;
+        setTimeout(function() {
+          submitToMailerLite(email, submitBtn, btnText, btnLoading, errorEl, successEl, retryCount + 1);
+        }, backoffMs);
+        return;
+      }
+      submitBtn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+      errorEl.textContent = 'Form submission failed. Please try again in a moment.';
+      errorEl.classList.remove('hidden');
+      errorEl.classList.add('show');
+    };
+    document.head.appendChild(script);
   }
+
+  function syncOfflineOptins() {
+    if (!navigator.onLine) return;
+    var keys = Object.keys(localStorage).filter(function(k) { return k.startsWith('marketingai_optin_'); });
+    keys.forEach(function(key) {
+      var data = JSON.parse(localStorage.getItem(key));
+      var ageMinutes = (Date.now() - new Date(data.timestamp).getTime()) / 60000;
+      if (ageMinutes < 1440) {
+        var cb = 'ml_sync_' + Date.now();
+        var url = MAILERLITE_CONFIG.endpoint + '?callback=' + encodeURIComponent(cb) + '&email=' + encodeURIComponent(data.email) + '&ml-submit=1';
+        window[cb] = function() {
+          localStorage.removeItem(key);
+          delete window[cb];
+        };
+        var script = document.createElement('script');
+        script.src = url;
+        script.onerror = function() { delete window[cb]; };
+        document.head.appendChild(script);
+      }
+    });
+  }
+
+  window.addEventListener('online', syncOfflineOptins);
 
   function calculate() {
     var loadTimeEl = document.getElementById('loadTime');
